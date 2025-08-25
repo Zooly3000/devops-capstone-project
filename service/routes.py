@@ -78,3 +78,4 @@ def list_accounts():
     accounts = Account.all()
     results = [account.serialize() for account in accounts]
     return jsonify(results), status.HTTP_200_OK
+
