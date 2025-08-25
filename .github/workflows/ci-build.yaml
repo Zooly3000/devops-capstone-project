@@ -12,6 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: python:3.9-slim
+
     services:
       postgres:
         image: postgres:alpine
@@ -30,15 +31,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
-
-      - name: Install dependencies
+      - name: Install system dependencies
         run: |
-          python -m venv venv
-          . venv/bin/activate
+          apt-get update && apt-get install -y gcc
+
+      - name: Install Python dependencies
+        run: |
+          python -m ensurepip --upgrade
+          pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
 
       - name: Lint with flake8
@@ -50,5 +50,6 @@ jobs:
         run: nosetests
         env:
           DATABASE_URI: "postgresql://postgres:pgs3cr3t@postgres:5432/testdb"
+
 
 
