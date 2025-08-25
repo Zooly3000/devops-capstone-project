@@ -152,46 +152,46 @@ class TestAccountService(TestCase):
         resp = self.client.delete(f"{BASE_URL}/0")
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
     def test_update_account(self):
-    """It should Update an existing Account"""
-    account = self._create_accounts(1)[0]
-    update_data = {
+        """It should Update an existing Account"""
+        account = self._create_accounts(1)[0]
+        update_data = {
         "name": "Updated Name",
         "email": "updated@example.com",
         "address": "Updated Address",
         "phone_number": "1234567890",
         "date_joined": str(account.date_joined),
-    }
+        }
     response = self.client.put(
         f"{BASE_URL}/{account.id}",
         json=update_data,
         content_type="application/json"
-    )
-    self.assertEqual(response.status_code, status.HTTP_200_OK)
-    updated_account = response.get_json()
-    self.assertEqual(updated_account["name"], update_data["name"])
-    self.assertEqual(updated_account["email"], update_data["email"])
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        updated_account = response.get_json()
+        self.assertEqual(updated_account["name"], update_data["name"])
+        self.assertEqual(updated_account["email"], update_data["email"])
 
     def test_update_account_not_found(self):
-    """It should return 404 when updating non-existent Account"""
-    update_data = {"name": "Name"}
-    response = self.client.put(
+        """It should return 404 when updating non-existent Account"""
+        update_data = {"name": "Name"}
+        response = self.client.put(
         f"{BASE_URL}/0",
         json=update_data,
         content_type="application/json"
-    )
-    self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_account_wrong_content_type(self):
-    """It should return 415 Unsupported Media Type when content-type is wrong"""
-    account = self._create_accounts(1)[0]
-    update_data = {"name": "Name"}
-    response = self.client.put(
+        """It should return 415 Unsupported Media Type when content-type is wrong"""
+        account = self._create_accounts(1)[0]
+        update_data = {"name": "Name"}
+        response = self.client.put(
         f"{BASE_URL}/{account.id}",
         json=update_data,
         content_type="text/plain"
-    )
-    self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+        )
+        self.assertEqual(response.status_code, status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
  def test_get_account_not_found(self):
-    """It should not Read an Account that is not found"""
-    resp = self.client.get(f"{BASE_URL}/0")
-    self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
+        """It should not Read an Account that is not found"""
+        resp = self.client.get(f"{BASE_URL}/0")
+        self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
