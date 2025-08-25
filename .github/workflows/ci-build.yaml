@@ -31,25 +31,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
       - name: Install system dependencies
         run: |
           apt-get update && apt-get install -y gcc
 
       - name: Install Python dependencies
         run: |
-          python -m ensurepip --upgrade
-          pip install --upgrade pip setuptools wheel
-          pip install -r requirements.txt
+          python -m venv venv
+          ./venv/bin/pip install --upgrade pip setuptools wheel
+          ./venv/bin/pip install -r requirements.txt
 
       - name: Lint with flake8
         run: |
-          flake8 service --count --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 service --count --max-complexity=10 --max-line-length=127 --statistics --ignore=E302
+          ./venv/bin/flake8 service --count --select=E9,F63,F7,F82 --show-source --statistics
+          ./venv/bin/flake8 service --count --max-complexity=10 --max-line-length=127 --statistics --ignore=E302
 
       - name: Run unit tests with nose
-        run: nosetests
+        run: ./venv/bin/nosetests
         env:
           DATABASE_URI: "postgresql://postgres:pgs3cr3t@postgres:5432/testdb"
+
 
 
 
