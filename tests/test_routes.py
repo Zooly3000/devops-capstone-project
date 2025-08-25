@@ -161,7 +161,7 @@ class TestAccountService(TestCase):
         "phone_number": "1234567890",
         "date_joined": str(account.date_joined),
         }
-    response = self.client.put(
+        response = self.client.put(
         f"{BASE_URL}/{account.id}",
         json=update_data,
         content_type="application/json"
