@@ -36,4 +36,3 @@ spec:
               name: postgresql
               key: database-user
         resources: {}
-
