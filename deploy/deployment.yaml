@@ -15,7 +15,7 @@ spec:
         app: accounts
     spec:
       containers:
-      - image: us.icr.io/sn-labs-jurijskovale/accounts:1
+      - image: us.icr.io/sn-labs-jurijskovale/accounts:latest
         name: accounts
         env:
         - name: DATABASE_HOST
